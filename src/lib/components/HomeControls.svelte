@@ -38,19 +38,40 @@
 	});
 
 	let pending = $state<Record<string, boolean>>({});
+	// Holds the state a tile should show the instant it's tapped, before HA's
+	// response and the follow-up poll come back — otherwise every toggle has
+	// a visible lag while it round-trips through call-service and a states
+	// refresh. Cleared once that refresh lands (or the call fails).
+	let optimistic = $state<Record<string, string>>({});
 	let unlockModalOpen = $state(false);
 	let lightModalId = $state<string | null>(null);
 	let vacuumModalId = $state<string | null>(null);
 	let climateModalId = $state<string | null>(null);
 
-	const lightModalEntity = $derived(poll.data?.find((e) => e.entity_id === lightModalId) ?? null);
+	function withOptimistic(e: HaEntity): HaEntity {
+		const state = optimistic[e.entity_id];
+		return state === undefined ? e : { ...e, state };
+	}
+
+	const lightModalEntity = $derived.by(() => {
+		const e = poll.data?.find((e) => e.entity_id === lightModalId);
+		return e ? withOptimistic(e) : null;
+	});
 	const vacuumModalEntity = $derived(poll.data?.find((e) => e.entity_id === vacuumModalId) ?? null);
 	const climateModalEntity = $derived(
 		poll.data?.find((e) => e.entity_id === climateModalId) ?? null
 	);
 
-	async function callService(entityId: string, service: string, data?: Record<string, unknown>) {
+	async function callService(
+		entityId: string,
+		service: string,
+		data?: Record<string, unknown>,
+		optimisticState?: string
+	) {
 		pending = { ...pending, [entityId]: true };
+		if (optimisticState !== undefined) {
+			optimistic = { ...optimistic, [entityId]: optimisticState };
+		}
 		try {
 			const res = await fetch('/api/ha/call-service', {
 				method: 'POST',
@@ -69,6 +90,11 @@
 			const rest = { ...pending };
 			delete rest[entityId];
 			pending = rest;
+			if (optimisticState !== undefined) {
+				const restOpt = { ...optimistic };
+				delete restOpt[entityId];
+				optimistic = restOpt;
+			}
 		}
 	}
 
@@ -115,7 +141,9 @@
 	function endLightPress(e: HaEntity) {
 		const wasLongPress = longPressFired;
 		cancelLightPress();
-		if (!wasLongPress) callService(e.entity_id, 'toggle');
+		if (!wasLongPress) {
+			callService(e.entity_id, 'toggle', undefined, e.state === 'on' ? 'off' : 'on');
+		}
 	}
 </script>
 
@@ -147,7 +175,9 @@
 	{:else if poll.data.length === 0}
 		<p class="text-gray-500">No entities found</p>
 	{:else}
-		{@const visible = poll.data.filter((e) => entityVisibility.isVisible(e.entity_id))}
+		{@const visible = poll.data
+			.filter((e) => entityVisibility.isVisible(e.entity_id))
+			.map(withOptimistic)}
 		{#if visible.length === 0}
 			<p class="text-gray-500">No devices selected — choose some in Settings.</p>
 		{:else}
@@ -238,7 +268,13 @@
 											'amber'
 										)} active:bg-white/15"
 										disabled={pending[e.entity_id]}
-										onclick={() => callService(e.entity_id, locked ? 'unlock' : 'lock')}
+										onclick={() =>
+											callService(
+												e.entity_id,
+												locked ? 'unlock' : 'lock',
+												undefined,
+												locked ? 'unlocked' : 'locked'
+											)}
 									>
 										<EntityLabel domain={e.domain} name={e.name} />
 										<span class="text-xs text-gray-500 uppercase">{e.state}</span>
@@ -250,7 +286,13 @@
 											open
 										)} active:bg-white/15"
 										disabled={pending[e.entity_id]}
-										onclick={() => callService(e.entity_id, open ? 'close_cover' : 'open_cover')}
+										onclick={() =>
+											callService(
+												e.entity_id,
+												open ? 'close_cover' : 'open_cover',
+												undefined,
+												open ? 'closed' : 'open'
+											)}
 									>
 										<EntityLabel domain={e.domain} name={e.name} />
 										<span class="text-xs text-gray-500 uppercase">{e.state}</span>
@@ -283,7 +325,7 @@
 											on
 										)} active:bg-white/15"
 										disabled={pending[e.entity_id]}
-										onclick={() => callService(e.entity_id, 'toggle')}
+										onclick={() => callService(e.entity_id, 'toggle', undefined, on ? 'off' : 'on')}
 									>
 										<EntityLabel domain={e.domain} name={e.name} />
 										<span class="text-xs text-gray-500 uppercase">{e.state}</span>

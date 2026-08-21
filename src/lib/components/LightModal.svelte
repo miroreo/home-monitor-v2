@@ -11,7 +11,12 @@
 	}: {
 		entity: HaEntity;
 		pending: Record<string, boolean>;
-		callService: (entityId: string, service: string, data?: Record<string, unknown>) => void;
+		callService: (
+			entityId: string,
+			service: string,
+			data?: Record<string, unknown>,
+			optimisticState?: string
+		) => void;
 		onclose: () => void;
 	} = $props();
 
@@ -70,7 +75,7 @@
 			? 'bg-emerald-500/80 active:bg-emerald-500'
 			: 'bg-white/10 active:bg-white/20'}"
 		disabled={pending[entity.entity_id]}
-		onclick={() => callService(entity.entity_id, 'toggle')}
+		onclick={() => callService(entity.entity_id, 'toggle', undefined, on ? 'off' : 'on')}
 	>
 		{on ? 'On' : 'Off'}
 	</button>
