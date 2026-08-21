@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+:root {
+	color-scheme: dark;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	background: #0b0d10;
+	color: #f3f4f6;
+	font-family:
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		sans-serif;
+	-webkit-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+* {
+	box-sizing: border-box;
+}
