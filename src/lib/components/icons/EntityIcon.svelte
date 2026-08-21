@@ -45,6 +45,10 @@
 		<circle cx="12" cy="12" r="8" />
 		<circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
 		<path d="M12 4v2M12 18v2M4 12h2M18 12h2" />
+	{:else if domain === 'automation'}
+		<path d="M5 4v6a4 4 0 0 0 4 4h6" />
+		<path d="M12 11l3 3-3 3" />
+		<circle cx="5" cy="4" r="2" fill="currentColor" stroke="none" />
 	{:else if domain === 'sensor'}
 		<path d="M3 12h4l2-7 4 14 2-7h6" />
 	{:else if domain === 'binary_sensor'}

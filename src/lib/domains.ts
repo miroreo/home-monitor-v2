@@ -1,5 +1,5 @@
 // Domains with an interactive control tile. Every other domain (sensors,
-// binary_sensors, weather, person, automations, etc.) renders read-only.
+// binary_sensors, weather, person, etc.) renders read-only.
 export const CONTROLLABLE_DOMAINS = [
 	'light',
 	'switch',
@@ -10,7 +10,8 @@ export const CONTROLLABLE_DOMAINS = [
 	'scene',
 	'input_boolean',
 	'media_player',
-	'vacuum'
+	'vacuum',
+	'automation'
 ] as const;
 
 export type ControllableDomain = (typeof CONTROLLABLE_DOMAINS)[number];
