@@ -103,12 +103,12 @@
 			class:italic={row.isScheduled}
 		>
 			{#if row.kind === 'bus'}
-				<span class="shrink-0 font-semibold not-italic opacity-100">{row.label}</span>
+				<span class="shrink-0 font-mono font-semibold not-italic opacity-100">{row.label}</span>
 			{/if}
 			<span class="truncate">{row.destination}</span>
 		</span>
 		<span class="flex shrink-0 items-center gap-1.5">
-			<span class="tabular-nums">{fmt(row.minutesAway)}</span>
+			<span class="font-mono tabular-nums">{fmt(row.minutesAway)}</span>
 			{#if row.isScheduled}
 				<ClockIcon class="h-4 w-4 shrink-0" />
 			{:else}
@@ -149,7 +149,7 @@
 					onclick={() => (alertsOpen = true)}
 				>
 					<AlertIcon class="h-4 w-4 shrink-0" />
-					<span class="text-sm">{poll.data.railAlerts.length}</span>
+					<span class="font-mono text-sm tabular-nums">{poll.data.railAlerts.length}</span>
 					{#each uniqueLines(poll.data.railAlerts) as line (line.id)}
 						<span class="h-5 w-5 shrink-0 rounded-full" style:background-color={line.bg}></span>
 					{/each}

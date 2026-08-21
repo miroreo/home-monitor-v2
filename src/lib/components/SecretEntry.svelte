@@ -32,7 +32,7 @@
 		type="password"
 		autocomplete="off"
 		inputmode={auth.keypadStyle === 'numeric' ? 'numeric' : 'text'}
-		class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-3 text-xl tracking-widest"
+		class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-3 font-mono text-xl tracking-widest"
 		bind:value
 		{placeholder}
 	/>

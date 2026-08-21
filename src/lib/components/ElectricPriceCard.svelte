@@ -30,13 +30,18 @@
 		{@const max = Math.max(...poll.data.recent.map((r) => r.price), 1)}
 		<div class="flex h-full flex-col gap-4">
 			<div class="flex items-baseline gap-3">
-				<span class="text-5xl font-semibold" style:color={current.color}>
+				<span class="font-mono text-5xl font-semibold tabular-nums" style:color={current.color}>
 					{poll.data.currentCentsPerKwh.toFixed(1)}¢
 				</span>
-				<span class="text-gray-400">/ kWh · {current.label}</span>
+				<span
+					class="font-mono text-xs font-bold tracking-widest uppercase"
+					style:color={current.color}
+				>
+					{current.label}
+				</span>
 			</div>
 			{#if poll.data.currentHourAverageCentsPerKwh !== null}
-				<p class="text-sm text-gray-500">
+				<p class="font-mono text-sm text-gray-500 tabular-nums">
 					Hour average: {poll.data.currentHourAverageCentsPerKwh.toFixed(1)}¢
 				</p>
 			{/if}
@@ -44,14 +49,14 @@
 				{#each poll.data.recent as r (r.millis)}
 					{@const t = tier(r.price)}
 					<div
-						class="flex-1 rounded-t"
+						class="flex-1"
 						style:height="{Math.max((r.price / max) * 100, 4)}%"
 						style:background={t.color}
 						style:opacity="0.85"
 					></div>
 				{/each}
 			</div>
-			<p class="text-xs text-gray-500">Last {poll.data.recent.length * 5} minutes</p>
+			<p class="font-mono text-xs text-gray-500">Last {poll.data.recent.length * 5} minutes</p>
 		</div>
 	{/if}
 </Card>

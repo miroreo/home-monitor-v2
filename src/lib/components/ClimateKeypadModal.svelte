@@ -45,7 +45,7 @@
 	</p>
 
 	<div class="mb-4 text-center">
-		<span class="text-5xl font-semibold tabular-nums">{value || '—'}</span>
+		<span class="font-mono text-5xl font-semibold tabular-nums">{value || '—'}</span>
 		<span class="text-3xl text-gray-500">°</span>
 	</div>
 

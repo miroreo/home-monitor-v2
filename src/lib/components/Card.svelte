@@ -9,15 +9,11 @@
 </script>
 
 <section
-	class="flex h-full min-h-0 w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 {compact
-		? 'p-3'
-		: 'p-5'}"
+	class="flex h-full min-h-0 w-full flex-col overflow-hidden border-t-2 border-white/10 {compact
+		? 'pt-2'
+		: 'pt-3'}"
 >
-	<h2
-		class="font-medium tracking-wide text-gray-400 uppercase {compact
-			? 'mb-1.5 text-sm'
-			: 'mb-3 text-lg'}"
-	>
+	<h2 class="mb-2 font-mono text-xs font-bold tracking-widest text-gray-400 uppercase">
 		{title}
 	</h2>
 	<div class="min-h-0 flex-1 overflow-hidden">

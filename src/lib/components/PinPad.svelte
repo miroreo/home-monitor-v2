@@ -16,7 +16,7 @@
 	{#each digits as d (d)}
 		<button
 			type="button"
-			class="rounded-xl bg-white/10 py-4 text-2xl font-semibold active:bg-white/20"
+			class="rounded-xl bg-white/10 py-4 font-mono text-2xl font-semibold active:bg-white/20"
 			onclick={() => onkey(d)}
 		>
 			{d}
@@ -32,7 +32,7 @@
 	</button>
 	<button
 		type="button"
-		class="rounded-xl bg-white/10 py-4 text-2xl font-semibold active:bg-white/20"
+		class="rounded-xl bg-white/10 py-4 font-mono text-2xl font-semibold active:bg-white/20"
 		onclick={() => onkey('0')}
 	>
 		0

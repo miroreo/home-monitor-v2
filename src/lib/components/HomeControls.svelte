@@ -154,7 +154,9 @@
 			<div class="flex h-full flex-col gap-2 overflow-y-auto pr-1">
 				{#each groupByRoom(visible) as [room, entities] (room)}
 					<div>
-						<h3 class="mb-1 text-xs font-medium text-gray-500 uppercase">{room}</h3>
+						<h3 class="mb-1 font-mono text-xs font-bold tracking-widest text-gray-500 uppercase">
+							{room}
+						</h3>
 						<div class="grid grid-cols-4 items-start gap-1 sm:grid-cols-5 md:grid-cols-6">
 							{#each entities as e (e.entity_id)}
 								{#if e.domain === 'climate'}
@@ -169,7 +171,7 @@
 											<span class="text-xs text-gray-500 uppercase">{e.state}</span>
 										</div>
 										<div class="mt-1 flex items-center justify-between">
-											<span class="text-xs text-gray-500">
+											<span class="font-mono text-xs text-gray-500 tabular-nums">
 												Now {e.attributes.current_temperature ?? '—'}°
 											</span>
 											<div class="flex items-center gap-2">
@@ -183,7 +185,7 @@
 												>
 													−
 												</button>
-												<span class="w-10 text-center text-lg font-semibold">
+												<span class="w-10 text-center font-mono text-lg font-semibold tabular-nums">
 													{e.attributes.temperature ?? '—'}°
 												</span>
 												<button

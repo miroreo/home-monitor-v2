@@ -1,5 +1,16 @@
 @import 'tailwindcss';
 
+@theme {
+	--radius: 0.125rem;
+	--radius-lg: 0.125rem;
+	--radius-xl: 0.1875rem;
+	--radius-2xl: 0.25rem;
+
+	--color-gray-300: #b8bcc2;
+	--color-gray-400: #9aa0a8;
+	--color-gray-500: #7d828a;
+}
+
 :root {
 	color-scheme: dark;
 }
@@ -10,7 +21,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	background: #0b0d10;
-	color: #f3f4f6;
+	color: #f2efe9;
 	font-family:
 		system-ui,
 		-apple-system,

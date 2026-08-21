@@ -26,6 +26,6 @@
 </script>
 
 <div class="flex items-baseline gap-4">
-	<span class="text-6xl font-semibold tabular-nums">{time}</span>
-	<span class="text-2xl text-gray-400">{date}</span>
+	<span class="font-mono text-6xl font-semibold tabular-nums">{time}</span>
+	<span class="font-mono text-2xl tracking-wide text-gray-400 uppercase">{date}</span>
 </div>
